@@ -1,12 +1,14 @@
-import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useNotifications } from '../contexts/NotificationsContext';
 
 interface SettingsProps {
   language: string;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-export default function Settings({ language }: SettingsProps) {
+export default function Settings({ language, isOpen, onOpen, onClose }: SettingsProps) {
   const { isDark, toggleTheme } = useTheme();
   const { 
     notificationsEnabled, 
@@ -18,8 +20,6 @@ export default function Settings({ language }: SettingsProps) {
     sounds,
     playSound
   } = useNotifications();
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const labels = {
     en: { title: 'Settings', theme: 'Theme', darkMode: 'Dark Mode', lightMode: 'Light Mode', notifications: 'Notifications', enableNotifications: 'Enable Notifications', notificationTime: 'Notification Time', sound: 'Notification Sound', testSound: 'Test Sound', close: 'Close' },
@@ -39,7 +39,10 @@ export default function Settings({ language }: SettingsProps) {
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
+        type="button"
+        onClick={onOpen}
+        aria-label={label.title}
+        title={label.title}
         className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all hover:scale-110 ${
           isDark
             ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
@@ -53,19 +56,27 @@ export default function Settings({ language }: SettingsProps) {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={onClose}
+        >
           <div
             className={`w-full max-w-md rounded-2xl shadow-2xl overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-white'}`}
-            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settings-title"
+            onClick={(event) => event.stopPropagation()}
           >
             {/* Header */}
             <div className={`p-6 border-b ${isDark ? 'border-slate-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between">
-                <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h2 id="settings-title" className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   ⚙️ {label.title}
                 </h2>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  type="button"
+                  onClick={onClose}
+                  aria-label={label.close}
                   className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                     isDark ? 'hover:bg-slate-700 text-gray-400' : 'hover:bg-gray-100 text-gray-500'
                   }`}
@@ -221,7 +232,8 @@ export default function Settings({ language }: SettingsProps) {
             {/* Footer */}
             <div className={`p-4 border-t ${isDark ? 'border-slate-700' : 'border-gray-200'}`}>
               <button
-                onClick={() => setIsOpen(false)}
+                type="button"
+                onClick={onClose}
                 className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
                   isDark
                     ? 'bg-slate-700 hover:bg-slate-600 text-white'

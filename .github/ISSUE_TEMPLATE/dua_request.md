@@ -29,8 +29,8 @@ Paste the Arabic text here
 ## Additional Translations (Optional)
 
 **Urdu:**
-**Hindi:**
 **Bengali:**
+**Malay:**
 **Tamil:**
 **Malayalam:**
 **Turkish:**

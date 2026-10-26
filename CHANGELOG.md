@@ -9,14 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release
-- 200+ authentic duas from Quran and Sahih hadith collections
-- 36 categories covering all life situations
+- 45 categorized groups with 123 dua records in the current source data
+- Supplementary Quranic and dhikr collections are documented and included in the generated API
 - Support for 10 languages:
   - English
   - Arabic
   - Urdu
-  - Hindi
   - Bengali
+  - Malay
   - Tamil
   - Malayalam
   - Turkish
@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Color-coded UI for easy navigation
 - Search functionality
 - Responsive design for all devices
-- GitHub JSON API for integration
+- Static JSON API for integration
 - Offline capability
 - Dua counter feature
 - Copy to clipboard functionality

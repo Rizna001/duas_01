@@ -1,21 +1,21 @@
 # 🤲 Comprehensive Islamic Duas Collection
 
-A complete collection of authentic Islamic supplications (Duas) from the Quran and Sunnah, organized by situation and available in 10 languages.
+A React web app and static JSON API for duas and dhikr, organized by situation and available in 10 languages.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Languages](https://img.shields.io/badge/languages-10-orange)
-![Duas](https://img.shields.io/badge/duas-200+-purple)
+![Duas](https://img.shields.io/badge/duas-123%20categorized-purple)
 
 ## 🌟 Features
 
-- **200+ Authentic Duas** from Quran and Sahih Hadith collections
-- **36 Categories** covering every life situation
-- **10 Languages** including Arabic, English, Urdu, Hindi, Bengali, Tamil, Malayalam, Turkish, Indonesian, and French
+- **45 categories and 123 categorized dua records**, generated from the same data used by the web app
+- Supplementary full collections for the 99 Names of Allah, 25 Prophets, Rabbana duas, salawat, prophet duas, and important texts
+- **10 Languages**: Arabic, English, Urdu, French, Turkish, Indonesian, Bengali, Malay, Tamil, and Malayalam
 - **Color-coded UI** for easy navigation
 - **Search functionality** to find specific duas
 - **Responsive design** works on all devices
-- **GitHub API** ready for integration
+- **Static JSON API** ready for integration
 - **Offline capable** - all data included
 
 ## 📚 Categories
@@ -89,8 +89,8 @@ A complete collection of authentic Islamic supplications (Duas) from the Quran a
 | English | en | 🇬🇧 |
 | Arabic | ar | 🇸🇦 |
 | Urdu | ur | 🇵🇰 |
-| Hindi | hi | 🇮🇳 |
 | Bengali | bn | 🇧🇩 |
+| Malay | ms | 🇲🇾 |
 | Tamil | ta | 🇮🇳 |
 | Malayalam | ml | 🇮🇳 |
 | Turkish | tr | 🇹🇷 |
@@ -108,15 +108,31 @@ git clone https://github.com/Rizna001/islamic-duas-collection.git
 # Navigate to project directory
 cd islamic-duas-collection
 
-# Install dependencies
-npm install
+# Install dependencies from the lockfile
+npm ci
 
 # Start development server
 npm run dev
 
 # Build for production
 npm run build
+
+# Check TypeScript
+npm run typecheck
 ```
+
+The build generates `src/data/catalog.json` and the API files under `public/api/v1/` from the source data. It fails if required content is missing or IDs are duplicated.
+
+## Deploy on Render
+
+Push this repository to GitHub, then in Render choose **New + → Blueprint** and select the repository. The included `render.yaml` installs dependencies, generates the API, builds the Vite app, and publishes `dist/` as a static site.
+
+The deployed site serves:
+
+- `/api/v1/index.json` — generated category and collection metadata
+- `/api/v1/duas.json` — all categorized duas and supplementary collections
+
+For a manual Render Static Site, use build command `npm ci --include=dev && npm run build` and publish directory `dist`. Do not configure this project as a Node web service; it does not run a backend server.
 
 ### Using the API
 
@@ -124,12 +140,14 @@ The complete duas data is available as a JSON API:
 
 ```javascript
 // Fetch all duas
-fetch('/api/v1/duas.json')
+fetch(`${window.location.origin}/api/v1/duas.json`)
   .then(response => response.json())
-  .then(data => console.log(data));
+  .then(data => console.log(data.categories, data.collections));
 
 // API Structure
 {
+  "total_categories": 45,
+  "total_duas": 123,
   "categories": [
     {
       "id": "morning-evening",
@@ -148,6 +166,13 @@ fetch('/api/v1/duas.json')
       ]
     }
   ],
+  "collections": {
+    "asma_ul_husna": ["..."],
+    "asma_ul_anbiya": ["..."],
+    "all_rabbana_duas": ["..."],
+    "all_salawats": ["..."],
+    "prophets_with_duas": ["..."]
+  },
   "languages": [
     { "code": "en", "name": "English", "flag": "🇬🇧" },
     ...
@@ -231,11 +256,10 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 
 ### Adding a New Dua
 
-1. Find the appropriate category in `src/data/expanded-duas.json`
-2. Add your dua following the existing structure
-3. Ensure all translations are accurate
-4. Include proper reference (hadith number or Quran verse)
-5. Submit a pull request
+1. Add the dua to the correct source category JSON under `src/data/`.
+2. Use a unique ID across categories and provide an English title, Arabic text, English translation, reference, and positive integer `times`.
+3. Run `npm run build`; the generator validates the source files and regenerates both the app catalog and API.
+4. Verify the updated category and dua counts before submitting a pull request.
 
 ### Adding a New Language
 

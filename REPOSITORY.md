@@ -1,126 +1,59 @@
-# 📦 Repository Structure
+# Repository Structure
 
-```
-islamic-duas-collection/
-│
-├── 📄 README.md                    # Main documentation
-├── 📄 LICENSE                      # MIT License
-├── 📄 CONTRIBUTING.md              # Contribution guidelines
-├── 📄 CHANGELOG.md                 # Version history
-├── 📄 API.md                       # API documentation
-├── 📄 CODE_OF_CONDUCT.md           # Community guidelines
-├── 📄 .gitignore                   # Git ignore rules
-│
-├── 📁 .github/
-│   ├── 📁 ISSUE_TEMPLATE/
-│   │   ├── 📄 bug_report.md       # Bug report template
-│   │   └── 📄 dua_request.md      # New dua request template
-│   └── 📄 PULL_REQUEST_TEMPLATE.md # PR template
-│
-├── 📁 public/
-│   └── 📁 api/
-│       └── 📁 v1/
-│           ├── 📄 index.json       # API metadata
-│           └── 📄 duas.json        # Complete duas data
-│
-├── 📁 src/
-│   ├── 📄 App.tsx                  # Main application component
-│   ├── 📄 main.tsx                 # Application entry point
-│   ├── 📄 index.css                # Global styles
-│   │
-│   ├── 📁 components/
-│   │   ├── 📄 Header.tsx           # Header with language selector
-│   │   ├── 📄 SearchBar.tsx        # Search functionality
-│   │   ├── 📄 CategoryCard.tsx     # Category display card
-│   │   ├── 📄 DuaDetail.tsx        # Individual dua view
-│   │   └── 📄 LanguageSelector.tsx # Language selection
-│   │
-│   └── 📁 data/
-│       ├── 📄 duas.json            # Original duas data
-│       └── 📄 expanded-duas.json   # Expanded duas collection
-│
-├── 📄 index.html                   # HTML entry point
-├── 📄 package.json                 # Dependencies
-├── 📄 tsconfig.json                # TypeScript config
-└── 📄 vite.config.js               # Vite configuration
+This repository contains a React/Vite website and a generated static JSON API.
+
+```text
+.
+├── .github/                 GitHub issue and pull-request templates
+├── public/api/v1/
+│   ├── duas.json             Generated complete API response
+│   └── index.json            Generated API metadata and counts
+├── scripts/
+│   └── build-api.mjs         Data validation and API/catalog generation
+├── src/
+│   ├── App.tsx               Main UI and category/detail navigation
+│   ├── components/           Category, dua, settings, tracker, and list views
+│   ├── contexts/              Theme, bookmarks, and notifications state
+│   └── data/                  Source JSON and supplementary TypeScript data
+├── index.html                Vite entry page
+├── package.json              Commands and dependencies
+├── render.yaml               Render Static Site Blueprint
+├── tsconfig.json             TypeScript settings
+└── vite.config.js            Vite configuration
 ```
 
-## 📊 File Statistics
+## Data and generated files
 
-- **Total Categories:** 36
-- **Total Duas:** 200+
-- **Languages Supported:** 10
-- **Components:** 5
-- **Data Files:** 2 JSON files
+The category sources are the JSON files in `src/data/`. Supplementary collections—such as the full Asma ul Husna and Asma ul Anbiya lists, Rabbana duas, salawat, prophet duas, and important texts—are maintained in TypeScript data modules in that directory.
 
-## 🚀 Quick Commands
+`npm run dev`, `npm run typecheck`, and `npm run build` first run `scripts/build-api.mjs`. That generator validates the category data and required full lists, then creates:
 
-```bash
-# Install dependencies
-npm install
+- `src/data/catalog.json` for the web app (generated, ignored by Git)
+- `public/api/v1/duas.json` for the complete data response
+- `public/api/v1/index.json` for counts and category metadata
 
-# Start development server
+Vite copies the public API files to `dist/api/v1/` during production builds.
+
+## Current data counts
+
+- 45 categories
+- 123 categorized duas
+- 10 languages
+- Supplementary collection counts are provided in the generated API index.
+
+The categorized counts do not include supplementary collections.
+
+## Local commands
+
+```sh
+npm ci
 npm run dev
-
-# Build for production
+npm run typecheck
 npm run build
-
-# Preview production build
-npm run preview
 ```
 
-## 📝 Key Files
+## Render deployment
 
-### Data Files
-- `src/data/duas.json` - Original collection
-- `src/data/expanded-duas.json` - Complete collection with all categories
-- `public/api/v1/duas.json` - API-ready JSON
+Push the repository to GitHub and create a Render Blueprint from it. The included configuration installs development dependencies, runs the validating production build, and publishes `dist/` as a static site. The API is served at `/api/v1/duas.json` and `/api/v1/index.json` on the Render site domain. This project has no backend server or start command.
 
-### Component Files
-- `src/App.tsx` - Main app with routing and state management
-- `src/components/Header.tsx` - Header with language selector
-- `src/components/DuaDetail.tsx` - Dua display with counter
-
-### Documentation
-- `README.md` - Project overview and usage
-- `API.md` - Complete API documentation
-- `CONTRIBUTING.md` - How to contribute
-
-## 🌐 Deployment
-
-### GitHub Pages
-1. Push to `main` branch
-2. Go to Settings → Pages
-3. Select `main` branch and `/root`
-4. Site will be available at `https://rizna001.github.io/islamic-duas-collection`
-
-### Vercel
-```bash
-npm install -g vercel
-vercel
-```
-
-### Netlify
-```bash
-npm install -g netlify-cli
-netlify deploy --prod
-```
-
-## 📦 Package Information
-
-- **Name:** islamic-duas-collection
-- **Version:** 1.0.0
-- **License:** MIT
-- **Repository:** https://github.com/Rizna001/islamic-duas-collection
-
-## 🔗 Important Links
-
-- **Documentation:** [README.md](README.md)
-- **API Docs:** [API.md](API.md)
-- **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
-- **Changelog:** [CHANGELOG.md](CHANGELOG.md)
-- **Code of Conduct:** [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-
----
-
-**بارك الله فيكم** - May Allah bless you
+See [README.md](README.md) for project usage and [API.md](API.md) for API details.

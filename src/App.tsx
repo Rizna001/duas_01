@@ -1,12 +1,5 @@
 import { useState, useMemo } from 'react';
-import expandedData from './data/expanded-duas.json';
-import originalData from './data/duas.json';
-import additionalData from './data/additional-duas.json';
-import prayerDuasData from './data/prayer-duas.json';
-import importantTextsData from './data/important-texts.json';
-import allRabbanaCategory from './data/allRabbanaCategory.json';
-import allSalawatsCategory from './data/allSalawatsCategory.json';
-import prophetNamesCategory from './data/prophet-names-category.json';
+import duasData from './data/catalog.json';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { BookmarksProvider, useBookmarks } from './contexts/BookmarksContext';
 import { NotificationsProvider } from './contexts/NotificationsContext';
@@ -24,19 +17,6 @@ import DuaReminder from './components/DuaReminder';
 import TasbeehCounter from './components/TasbeehCounter';
 import ImportantTextViews from './components/ImportantTextViews';
 import ProphetNamesView from './components/ProphetNamesView';
-
-// Merge all data sources
-const mergedCategories = [
-  ...(originalData.categories || []), 
-  ...(expandedData.categories || []),
-  ...(additionalData.categories || []),
-  ...(prayerDuasData.categories || []),
-  ...(importantTextsData.categories || []),
-  ...(allRabbanaCategory.categories || []),
-  ...(allSalawatsCategory.categories || []),
-  ...(prophetNamesCategory.categories || [])
-];
-const duasData = { categories: mergedCategories, languages: originalData.languages };
 
 type LanguageCode = 'en' | 'ar' | 'ur' | 'fr' | 'tr' | 'id' | 'bn' | 'ms' | 'ta' | 'ml';
 
@@ -196,11 +176,11 @@ function AppContent() {
         )}
 
         {/* Special Views for Asma ul Husna and Asma ul Anbiya */}
-        {selectedCategory && !selectedDua && selectedCategory.id === 'asma-ul-husna-complete' && (
+        {selectedCategory && !selectedDua && selectedCategory.id === 'asma-ul-husna' && (
           <AsmaUlHusnaView language={language} onBack={() => setSelectedCategory(null)} />
         )}
 
-        {selectedCategory && !selectedDua && selectedCategory.id === 'asma-ul-anbiya-complete' && (
+        {selectedCategory && !selectedDua && selectedCategory.id === 'asma-ul-anbiya' && (
           <AsmaUlAnbiyaView language={language} onBack={() => setSelectedCategory(null)} />
         )}
 
@@ -215,7 +195,7 @@ function AppContent() {
         )}
 
         {/* Regular Category View */}
-        {selectedCategory && !selectedDua && selectedCategory.id !== 'asma-ul-husna-complete' && selectedCategory.id !== 'asma-ul-anbiya-complete' && selectedCategory.id !== 'important-texts' && selectedCategory.id !== 'prophet-names-meanings' && (
+        {selectedCategory && !selectedDua && selectedCategory.id !== 'asma-ul-husna' && selectedCategory.id !== 'asma-ul-anbiya' && selectedCategory.id !== 'important-texts' && selectedCategory.id !== 'prophet-names-meanings' && (
           <div>
             <button
               onClick={() => setSelectedCategory(null)}
@@ -311,7 +291,12 @@ function AppContent() {
       </footer>
 
       {/* Settings Modal */}
-      <Settings language={language} />
+      <Settings
+        language={language}
+        isOpen={showSettings}
+        onOpen={() => setShowSettings(true)}
+        onClose={() => setShowSettings(false)}
+      />
     </div>
   );
 }

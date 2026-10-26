@@ -1,158 +1,44 @@
-# 🚀 GitHub Repository Setup Guide
+# Setup and Render Deployment
 
-## Quick Start
+## Run locally
 
-Your Islamic Duas Collection repository is ready! Follow these steps to publish it on GitHub.
+Requirements: Node.js and npm.
 
-### Step 1: Create GitHub Repository
-
-1. Go to [GitHub](https://github.com)
-2. Click the "+" icon → "New repository"
-3. Repository name: `islamic-duas-collection`
-4. Description: "A comprehensive collection of authentic Islamic duas in 10 languages"
-5. Make it **Public**
-6. **Don't** initialize with README (we already have one)
-7. Click "Create repository"
-
-**Your repository is ready at:** https://github.com/Rizna001/islamic-duas-collection
-
-### Step 2: Initialize Git and Push
-
-```bash
-# Initialize git repository
-git init
-
-# Add all files
-git add .
-
-# Create first commit
-git commit -m "Initial release: 200+ authentic duas in 10 languages"
-
-# Add remote repository
-git remote add origin https://github.com/Rizna001/islamic-duas-collection.git
-
-# Push to GitHub
-git branch -M main
-git push -u origin main
+```sh
+npm ci
+npm run dev
 ```
 
-### Step 3: Enable GitHub Pages (Optional)
+The local website runs on `http://localhost:3000`. The API is available at:
 
-To make the API publicly accessible:
+- `http://localhost:3000/api/v1/index.json`
+- `http://localhost:3000/api/v1/duas.json`
 
-1. Go to your repository on GitHub
-2. Click **Settings** → **Pages**
-3. Under "Source", select **Deploy from a branch**
-4. Select branch: **main** and folder: **/ (root)**
-5. Click **Save**
-6. Your API will be available at: `https://rizna001.github.io/islamic-duas-collection/api/v1/duas.json`
+To check types and create the production build:
 
-## 📋 Repository Contents
-
-### Documentation Files
-- ✅ `README.md` - Main documentation with features, categories, and usage
-- ✅ `LICENSE` - MIT License
-- ✅ `CONTRIBUTING.md` - Guidelines for contributors
-- ✅ `CHANGELOG.md` - Version history
-- ✅ `API.md` - Complete API documentation
-- ✅ `CODE_OF_CONDUCT.md` - Community guidelines
-- ✅ `REPOSITORY.md` - Repository structure overview
-- ✅ `.gitignore` - Git ignore rules
-
-### GitHub Templates
-- ✅ `.github/ISSUE_TEMPLATE/bug_report.md` - Bug report template
-- ✅ `.github/ISSUE_TEMPLATE/dua_request.md` - New dua request template
-- ✅ `.github/PULL_REQUEST_TEMPLATE.md` - PR template
-
-### Source Code
-- ✅ React + TypeScript application
-- ✅ 36 categories of duas
-- ✅ 200+ authentic supplications
-- ✅ 10 language support
-- ✅ Color-coded UI
-- ✅ Search functionality
-- ✅ Responsive design
-
-### API Data
-- ✅ `public/api/v1/duas.json` - Complete duas data
-- ✅ `public/api/v1/index.json` - API metadata
-
-## 🎯 Next Steps
-
-### 1. Update Repository Information
-
-Edit these files with your information:
-- `README.md` - Update contact info, repository URL
-- `API.md` - Update base URL with your GitHub username
-- `public/api/v1/index.json` - Update repository URL
-
-### 2. Add More Features (Optional)
-
-Consider adding:
-- Audio recitations
-- Dark mode
-- Bookmarking
-- Daily notifications
-- More languages
-
-### 3. Promote Your Repository
-
-- Share on social media
-- Add to Islamic app directories
-- Create a demo video
-- Write a blog post
-
-## 📊 Repository Stats
-
-```
-📦 Total Files: 20+
-📚 Categories: 36
-🤲 Duas: 200+
-🌍 Languages: 10
-📱 Components: 5
-📄 Documentation: 7 files
-🔧 Templates: 3 files
+```sh
+npm run typecheck
+npm run build
 ```
 
-## 🔗 Useful Links
+The build generator reads the source collections in `src/data/`, validates them, creates `src/data/catalog.json` for the app, and generates both API JSON files under `public/api/v1/`. Vite copies those API files to `dist/api/v1/`.
 
-After publishing, your repository will have:
+## Deploy from GitHub to Render
 
-- **Main Site:** `https://rizna001.github.io/islamic-duas-collection`
-- **API Endpoint:** `https://rizna001.github.io/islamic-duas-collection/api/v1/duas.json`
-- **Documentation:** `https://github.com/Rizna001/islamic-duas-collection#readme`
-- **API Docs:** `https://github.com/Rizna001/islamic-duas-collection/blob/main/API.md`
+1. Push the complete repository to GitHub.
+2. In Render, choose **New + → Blueprint** and connect the repository.
+3. Confirm the static site configuration from `render.yaml`.
 
-## 📝 Commit Message Guidelines
+The Blueprint runs `npm ci --include=dev && npm run build` and publishes `dist/`. This is a static site; do not create a Node web service or supply a start command.
 
-Use these formats for commits:
+After deployment, check both the website and the API:
 
-```
-feat: Add new category for [situation]
-fix: Correct translation in [category]
-docs: Update README with new features
-style: Improve UI for [component]
-refactor: Optimize data loading
-test: Add tests for [feature]
-chore: Update dependencies
+```text
+https://<your-render-service>.onrender.com/
+https://<your-render-service>.onrender.com/api/v1/index.json
+https://<your-render-service>.onrender.com/api/v1/duas.json
 ```
 
-## 🎉 You're Ready!
+The generated metadata and content come from the same validated source. A missing field or categorized-record translation, duplicate ID, or incomplete 99-name/25-prophet list stops the build rather than deploying partial data.
 
-Your repository is complete with:
-- ✅ Professional documentation
-- ✅ Contribution guidelines
-- ✅ Issue and PR templates
-- ✅ Complete API
-- ✅ Beautiful UI
-- ✅ 200+ authentic duas
-- ✅ 10 language support
-
-**بارك الله فيكم** - May Allah bless your efforts in serving the Muslim community!
-
----
-
-**Need Help?**
-- Check [README.md](README.md) for usage instructions
-- Read [API.md](API.md) for API documentation
-- See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines
+If a separate main app will request the API from another domain, add an `Access-Control-Allow-Origin` custom header for `/api/*` in the Render Dashboard and set it to the main app's exact origin. This setting is managed in Render, not in the Blueprint file.

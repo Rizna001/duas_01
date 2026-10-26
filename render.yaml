@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: duas-dhikr-api
+    runtime: static
+    buildCommand: npm ci --include=dev && npm run build
+    staticPublishPath: ./dist

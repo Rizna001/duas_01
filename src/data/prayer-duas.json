@@ -156,7 +156,7 @@
       "name": { "en": "Hajj & Umrah Duas", "ar": "أدعية الحج والعمرة", "ur": "حج اور عمرہ کی دعائیں", "fr": "Duas du Hajj et Omra", "tr": "Hac ve Umre Duaları", "id": "Doa Haji dan Umrah", "bn": "হজ ও উমরাহর দোয়া", "ms": "Doa Haji dan Umrah", "ta": "ஹஜ் & உம்ரா துஆக்கள்", "ml": "ഹജ്ജ് & ഉംറ ദുആകൾ" },
       "duas": [
         {
-          "id": "hu-1",
+          "id": "hajj-expanded-hu-1",
           "title": { "en": "Dua When Entering Ihram", "ar": "دعاء عند الإحرام", "ur": "احرام باندھتے وقت دعا", "fr": "Doua en entrant en Ihram", "tr": "İhrama Girerken Dua", "id": "Doa Saat Memakai Ihram", "bn": "ইহরাম পরার সময় দোয়া", "ms": "Doa Ketika Memakai Ihram", "ta": "இஹ்ராம் அணியும்போது துஆ", "ml": "ഇഹ്റാം ധരിക്കുമ്പോൾ ദുആ" },
           "arabic": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
           "translation": {
@@ -175,7 +175,7 @@
           "times": 1
         },
         {
-          "id": "hu-2",
+          "id": "hajj-expanded-hu-2",
           "title": { "en": "Dua When Seeing the Ka'bah", "ar": "دعاء عند رؤية الكعبة", "ur": "کعبہ دیکھتے وقت دعا", "fr": "Doua en voyant la Ka'bah", "tr": "Kabe'yi Görünce Dua", "id": "Doa Saat Melihat Ka'bah", "bn": "কাবা দেখার সময় দোয়া", "ms": "Doa Ketika Melihat Kaabah", "ta": "கஃபாவை பார்க்கும்போது துஆ", "ml": "കഅ്ബ കാണുമ്പോൾ ദുആ" },
           "arabic": "اللَّهُمَّ زِدْ هَذَا الْبَيْتَ تَشْرِيفًا وَتَعْظِيمًا وَتَكْرِيمًا وَمَهَابَةً",
           "translation": {
@@ -194,7 +194,7 @@
           "times": 1
         },
         {
-          "id": "hu-3",
+          "id": "hajj-expanded-hu-3",
           "title": { "en": "Dua Between Rukn Yamani and Hajar Aswad", "ar": "دعاء بين الركن اليماني والحجر الأسود", "ur": "رکن یمانی اور حجر اسود کے درمیان دعا", "fr": "Doua entre Rukn Yamani et Hajar Aswad", "tr": "Rüknü'l-Yemani ile Hacerü'l-Esved Arasında Dua", "id": "Doa Antara Rukun Yamani dan Hajar Aswad", "bn": "রুকন ইয়ামানী ও হাজারে আসওয়াদের মাঝে দোয়া", "ms": "Doa Antara Rukun Yamani dan Hajar Aswad", "ta": "ருக்னுல் யமானி மற்றும் ஹஜருல் அஸ்வத் இடையில் துஆ", "ml": "റുക്നുൽ യമാനിയും ഹജറുൽ അസ്വദും ഇടയിൽ ദുആ" },
           "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
           "translation": {
@@ -213,7 +213,7 @@
           "times": 1
         },
         {
-          "id": "hu-4",
+          "id": "hajj-expanded-hu-4",
           "title": { "en": "Dua at Safa and Marwah", "ar": "دعاء عند الصفا والمروة", "ur": "صفا اور مروہ پر دعا", "fr": "Doua à Safa et Marwah", "tr": "Safa ve Merve'de Dua", "id": "Doa di Safa dan Marwah", "bn": "সাফা ও মারওয়ায় দোয়া", "ms": "Doa di Safa dan Marwah", "ta": "சஃபா மற்றும் மர்வாவில் துஆ", "ml": "സ്വഫാ-മർവയിൽ ദുആ" },
           "arabic": "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ",
           "translation": {
@@ -232,7 +232,7 @@
           "times": 7
         },
         {
-          "id": "hu-5",
+          "id": "hajj-expanded-hu-5",
           "title": { "en": "Dua at Arafat", "ar": "دعاء بعرفة", "ur": "عرفہ میں دعا", "fr": "Doua à Arafat", "tr": "Arafat'ta Dua", "id": "Doa di Arafah", "bn": "আরাফাতে দোয়া", "ms": "Doa di Arafah", "ta": "அரஃபாவில் துஆ", "ml": "അറഫാത്തിൽ ദുആ" },
           "arabic": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
           "translation": {

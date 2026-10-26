@@ -4,7 +4,7 @@ Your Islamic Duas Collection app now has **ALL 11 features** fully implemented a
 
 ## ✅ Original 7 Features
 
-### 🎨 1. Color-Coded UI for 36 Categories
+### 🎨 1. Color-Coded UI for 45 Categories
 Each category has its own unique color scheme with custom gradients, borders, and icons.
 
 ### 🔍 2. Search Functionality
@@ -110,9 +110,11 @@ interface BookmarkedDua {
 **Features:**
 - Browser notification API integration
 - Schedule daily notifications at custom time
+- Schedule dua reminders on selected weekdays at a chosen clock time
+- Create multiple reminders on the same day, including different times for the same dua
 - Random dua selection for each notification
 - Permission request flow
-- Enable/disable toggle
+- Enable/disable toggle for daily notifications
 - Persistent settings in localStorage
 - Time picker for notification schedule
 - Visual confirmation when enabled
@@ -121,11 +123,12 @@ interface BookmarkedDua {
 
 **How it works:**
 1. User enables notifications in Settings
-2. Browser requests notification permission
-3. User sets preferred notification time
-4. App checks every minute if it's time to notify
-5. Sends a random dua notification
-6. Tracks last notification to avoid duplicates
+2. Browser requests notification permission when a reminder is created or daily notifications are enabled
+3. User sets preferred daily notification time or a weekday/time for each dua reminder
+4. While the app is open, it checks every 30 seconds for due reminders
+5. Sends notifications and tracks each reminder separately to avoid duplicates
+
+Custom reminders require the app to remain open in a browser tab; they are not operating-system alarms and do not fire after the browser closes.
 
 **Notification Content:**
 ```javascript
@@ -138,8 +141,10 @@ interface BookmarkedDua {
 ```
 
 **Settings:**
-- Toggle notifications on/off
+- Toggle daily notifications on/off
 - Set notification time (e.g., 08:00, 12:00, 18:00)
+- Choose any weekdays and a clock time for each custom dua reminder
+- Add multiple reminders for a day
 - Automatic permission handling
 
 ---
@@ -199,7 +204,7 @@ if (isDark) {
 
 | # | Feature | Status | Implementation |
 |---|---------|--------|----------------|
-| 1 | Color-Coded UI (36 categories) | ✅ Complete | `CategoryCard.tsx` |
+| 1 | Color-Coded UI (45 categories) | ✅ Complete | `CategoryCard.tsx` |
 | 2 | Search Functionality | ✅ Complete | `SearchBar.tsx` + `App.tsx` |
 | 3 | Multi-Language Support (10 languages) | ✅ Complete | `Header.tsx` |
 | 4 | Dua Counter | ✅ Complete | `DuaDetail.tsx` |
@@ -344,13 +349,13 @@ Beyond the 11 requested features, you also get:
 Your Islamic Duas Collection app is now **feature-complete** with:
 
 ✅ **11 Major Features** - All implemented and tested  
-✅ **36 Categories** - Color-coded and organized  
-✅ **200+ Duas** - Authentic sources  
+✅ **45 Categories** - Color-coded and organized
+✅ **123 categorized duas plus supplementary collections**
 ✅ **10 Languages** - Full translation support  
 ✅ **Dark Mode** - Beautiful dark theme  
 ✅ **Audio** - Arabic recitation playback  
 ✅ **Bookmarks** - Save favorite duas  
-✅ **Notifications** - Daily dua reminders  
+✅ **Notifications** - Daily duas and weekday/time-based custom reminders
 ✅ **API** - Ready for integration  
 ✅ **Responsive** - Works on all devices  
 ✅ **Production-Ready** - Built and tested  

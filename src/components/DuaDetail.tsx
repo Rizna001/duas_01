@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useBookmarks } from '../contexts/BookmarksContext';
+import { ReminderDay, useNotifications } from '../contexts/NotificationsContext';
 import AudioPlayer from './AudioPlayer';
 
 export default function DuaDetail({
@@ -18,8 +19,15 @@ export default function DuaDetail({
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg' | 'xl'>('lg');
   const [bookmarkAnimating, setBookmarkAnimating] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
+  const [reminderTime, setReminderTime] = useState('08:00');
+  const [reminderDays, setReminderDays] = useState<ReminderDay[]>([
+    (['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as ReminderDay[])[new Date().getDay()],
+  ]);
+  const [reminderSound, setReminderSound] = useState('adhan');
+  const [reminderError, setReminderError] = useState('');
   const { isDark } = useTheme();
   const { isBookmarked, toggleBookmark } = useBookmarks();
+  const { addReminder, sounds } = useNotifications();
 
   const arabicFontSize = {
     sm: 'text-2xl',
@@ -51,10 +59,62 @@ export default function DuaDetail({
   };
 
   const handleSetReminder = () => {
-    // Auto-copy the dua text
-    const text = `${dua.arabic}\n\n${dua.translation[language] || dua.translation.en}`;
-    navigator.clipboard.writeText(text);
     setShowReminderModal(true);
+  };
+
+  const dayOptions: { value: ReminderDay; labels: Record<string, string> }[] = [
+    { value: 'mon', labels: { en: 'Monday', ar: 'الاثنين', ur: 'پیر', fr: 'Lundi', tr: 'Pazartesi', id: 'Senin', bn: 'সোমবার', ms: 'Isnin', ta: 'திங்கள்', ml: 'തിങ്കളാഴ്ച' } },
+    { value: 'tue', labels: { en: 'Tuesday', ar: 'الثلاثاء', ur: 'منگل', fr: 'Mardi', tr: 'Salı', id: 'Selasa', bn: 'মঙ্গলবার', ms: 'Selasa', ta: 'செவ்வாய்', ml: 'ചൊവ്വാഴ്ച' } },
+    { value: 'wed', labels: { en: 'Wednesday', ar: 'الأربعاء', ur: 'بدھ', fr: 'Mercredi', tr: 'Çarşamba', id: 'Rabu', bn: 'বুধবার', ms: 'Rabu', ta: 'புதன்', ml: 'ബുധനാഴ്ച' } },
+    { value: 'thu', labels: { en: 'Thursday', ar: 'الخميس', ur: 'جمعرات', fr: 'Jeudi', tr: 'Perşembe', id: 'Kamis', bn: 'বৃহস্পতিবার', ms: 'Khamis', ta: 'வியாழன்', ml: 'വ്യാഴാഴ്ച' } },
+    { value: 'fri', labels: { en: 'Friday', ar: 'الجمعة', ur: 'جمعہ', fr: 'Vendredi', tr: 'Cuma', id: 'Jumat', bn: 'শুক্রবার', ms: 'Jumaat', ta: 'வெள்ளி', ml: 'വെള്ളിയാഴ്ച' } },
+    { value: 'sat', labels: { en: 'Saturday', ar: 'السبت', ur: 'ہفتہ', fr: 'Samedi', tr: 'Cumartesi', id: 'Sabtu', bn: 'শনিবার', ms: 'Sabtu', ta: 'சனி', ml: 'ശനിയാഴ്ച' } },
+    { value: 'sun', labels: { en: 'Sunday', ar: 'الأحد', ur: 'اتوار', fr: 'Dimanche', tr: 'Pazar', id: 'Minggu', bn: 'রবিবার', ms: 'Ahad', ta: 'ஞாயிறு', ml: 'ഞായറാഴ്ച' } },
+  ];
+
+  const reminderLabels: Record<string, Record<string, string>> = {
+    en: { title: 'Set Reminder', description: 'Choose the days and local time for this weekly reminder.', name: 'Title', days: 'Repeat on', time: 'Reminder time', sound: 'Sound', multiple: 'Create another reminder to schedule this dua at a different time.', browser: 'Keep this app open in a browser tab for reminders to run.', selectDay: 'Select at least one day.', permission: 'Allow browser notifications to save a reminder.', cancel: 'Cancel', save: 'Set Reminder' },
+    ar: { title: 'تعيين تذكير', description: 'اختر الأيام والوقت المحلي لهذا التذكير الأسبوعي.', name: 'العنوان', days: 'التكرار في', time: 'وقت التذكير', sound: 'الصوت', multiple: 'أنشئ تذكيراً آخر لجدولة هذا الدعاء في وقت مختلف.', browser: 'أبقِ التطبيق مفتوحاً في علامة تبويب بالمتصفح لتعمل التذكيرات.', selectDay: 'اختر يوماً واحداً على الأقل.', permission: 'اسمح بإشعارات المتصفح لحفظ التذكير.', cancel: 'إلغاء', save: 'تعيين تذكير' },
+    ur: { title: 'یاد دہانی سیٹ کریں', description: 'اس ہفتہ وار یاد دہانی کے لیے دن اور مقامی وقت منتخب کریں۔', name: 'عنوان', days: 'ان دنوں میں دہرائیں', time: 'یاد دہانی کا وقت', sound: 'آواز', multiple: 'اس دعا کو دوسرے وقت پر شیڈول کرنے کے لیے ایک اور یاد دہانی بنائیں۔', browser: 'یاد دہانیاں چلانے کے لیے ایپ کو براؤزر ٹیب میں کھلا رکھیں۔', selectDay: 'کم از کم ایک دن منتخب کریں۔', permission: 'یاد دہانی محفوظ کرنے کے لیے براؤزر کی اطلاعات کی اجازت دیں۔', cancel: 'منسوخ کریں', save: 'یاد دہانی سیٹ کریں' },
+    fr: { title: 'Définir un rappel', description: 'Choisissez les jours et l’heure locale de ce rappel hebdomadaire.', name: 'Titre', days: 'Répéter le', time: 'Heure du rappel', sound: 'Son', multiple: 'Créez un autre rappel pour programmer cette invocation à une autre heure.', browser: 'Gardez l’application ouverte dans un onglet pour que les rappels fonctionnent.', selectDay: 'Sélectionnez au moins un jour.', permission: 'Autorisez les notifications du navigateur pour enregistrer un rappel.', cancel: 'Annuler', save: 'Définir le rappel' },
+    tr: { title: 'Hatırlatıcı Ayarla', description: 'Bu haftalık hatırlatıcı için günleri ve yerel saati seçin.', name: 'Başlık', days: 'Şu günlerde tekrarla', time: 'Hatırlatma saati', sound: 'Ses', multiple: 'Bu duayı başka bir saate planlamak için yeni bir hatırlatıcı oluşturun.', browser: 'Hatırlatıcıların çalışması için uygulamayı tarayıcı sekmesinde açık tutun.', selectDay: 'En az bir gün seçin.', permission: 'Hatırlatıcıyı kaydetmek için tarayıcı bildirimlerine izin verin.', cancel: 'İptal', save: 'Hatırlatıcı Ayarla' },
+    id: { title: 'Atur Pengingat', description: 'Pilih hari dan waktu lokal untuk pengingat mingguan ini.', name: 'Judul', days: 'Ulangi pada', time: 'Waktu pengingat', sound: 'Suara', multiple: 'Buat pengingat lain untuk menjadwalkan doa ini pada waktu berbeda.', browser: 'Biarkan aplikasi terbuka di tab browser agar pengingat berjalan.', selectDay: 'Pilih setidaknya satu hari.', permission: 'Izinkan notifikasi browser untuk menyimpan pengingat.', cancel: 'Batal', save: 'Atur Pengingat' },
+    bn: { title: 'রিমাইন্ডার সেট করুন', description: 'এই সাপ্তাহিক রিমাইন্ডারের জন্য দিন ও স্থানীয় সময় বেছে নিন।', name: 'শিরোনাম', days: 'যে দিনগুলোতে পুনরাবৃত্তি হবে', time: 'রিমাইন্ডারের সময়', sound: 'শব্দ', multiple: 'এই দোয়াটি অন্য সময়ে নির্ধারণ করতে আরেকটি রিমাইন্ডার তৈরি করুন।', browser: 'রিমাইন্ডার চালু রাখতে ব্রাউজার ট্যাবে অ্যাপটি খোলা রাখুন।', selectDay: 'অন্তত একটি দিন নির্বাচন করুন।', permission: 'রিমাইন্ডার সংরক্ষণ করতে ব্রাউজার বিজ্ঞপ্তির অনুমতি দিন।', cancel: 'বাতিল', save: 'রিমাইন্ডার সেট করুন' },
+    ms: { title: 'Tetapkan Peringatan', description: 'Pilih hari dan waktu tempatan untuk peringatan mingguan ini.', name: 'Tajuk', days: 'Ulang pada', time: 'Masa peringatan', sound: 'Bunyi', multiple: 'Cipta peringatan lain untuk menjadualkan doa ini pada waktu berbeza.', browser: 'Biarkan aplikasi terbuka dalam tab pelayar agar peringatan berfungsi.', selectDay: 'Pilih sekurang-kurangnya satu hari.', permission: 'Benarkan pemberitahuan pelayar untuk menyimpan peringatan.', cancel: 'Batal', save: 'Tetapkan Peringatan' },
+    ta: { title: 'நினைவூட்டலை அமை', description: 'இந்த வாராந்திர நினைவூட்டலுக்கான நாட்களையும் உள்ளூர் நேரத்தையும் தேர்ந்தெடுக்கவும்.', name: 'தலைப்பு', days: 'இந்த நாட்களில் மீண்டும்', time: 'நினைவூட்டல் நேரம்', sound: 'ஒலி', multiple: 'இந்த துஆவை வேறு நேரத்தில் அமைக்க மற்றொரு நினைவூட்டலை உருவாக்கவும்.', browser: 'நினைவூட்டல்கள் இயங்க பயன்பாட்டை உலாவி தாவலில் திறந்து வைத்திருக்கவும்.', selectDay: 'குறைந்தது ஒரு நாளையாவது தேர்ந்தெடுக்கவும்.', permission: 'நினைவூட்டலைச் சேமிக்க உலாவி அறிவிப்புகளை அனுமதிக்கவும்.', cancel: 'ரத்து', save: 'நினைவூட்டலை அமை' },
+    ml: { title: 'ഓർമ്മപ്പെടുത്തൽ സജ്ജമാക്കുക', description: 'ഈ ആഴ്ചതോറുമുള്ള ഓർമ്മപ്പെടുത്തലിനായി ദിവസങ്ങളും പ്രാദേശിക സമയവും തിരഞ്ഞെടുക്കുക.', name: 'തലക്കെട്ട്', days: 'ഈ ദിവസങ്ങളിൽ ആവർത്തിക്കുക', time: 'ഓർമ്മപ്പെടുത്തൽ സമയം', sound: 'ശബ്ദം', multiple: 'ഈ ദുആ മറ്റൊരു സമയത്ത് ക്രമീകരിക്കാൻ മറ്റൊരു ഓർമ്മപ്പെടുത്തൽ സൃഷ്ടിക്കുക.', browser: 'ഓർമ്മപ്പെടുത്തലുകൾ പ്രവർത്തിക്കാൻ ആപ്പ് ബ്രൗസർ ടാബിൽ തുറന്നുവെക്കുക.', selectDay: 'കുറഞ്ഞത് ഒരു ദിവസമെങ്കിലും തിരഞ്ഞെടുക്കുക.', permission: 'ഓർമ്മപ്പെടുത്തൽ സംരക്ഷിക്കാൻ ബ്രൗസർ അറിയിപ്പുകൾ അനുവദിക്കുക.', cancel: 'റദ്ദാക്കുക', save: 'ഓർമ്മപ്പെടുത്തൽ സജ്ജമാക്കുക' },
+  };
+  const reminderText = reminderLabels[language] || reminderLabels.en;
+
+  const toggleReminderDay = (day: ReminderDay) => {
+    setReminderDays(current => current.includes(day)
+      ? current.filter(selected => selected !== day)
+      : [...current, day]);
+  };
+
+  const saveWeeklyReminder = async () => {
+    if (reminderDays.length === 0) {
+      setReminderError(reminderText.selectDay);
+      return;
+    }
+
+    const saved = await addReminder({
+      duaId: dua.id,
+      duaTitle: dua.title[language] || dua.title.en,
+      duaArabic: dua.arabic,
+      times: dua.times,
+      frequency: 'weekly',
+      time: reminderTime,
+      days: reminderDays,
+      sound: reminderSound,
+      enabled: true,
+    });
+    if (!saved) {
+      setReminderError(reminderText.permission);
+      return;
+    }
+    setReminderError('');
+    setShowReminderModal(false);
   };
 
   const isCurrentlyBookmarked = isBookmarked(dua.id);
@@ -250,21 +310,22 @@ export default function DuaDetail({
           >
             <div className={`p-6 border-b ${isDark ? 'border-slate-700' : 'border-gray-200'}`}>
               <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                ⏰ {language === 'en' ? 'Set Reminder' : language === 'ar' ? 'تعيين تذكير' : language === 'ur' ? 'یاد دہانی سیٹ کریں' : 'Set Reminder'}
+                ⏰ {reminderText.title}
               </h3>
               <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                {language === 'en' ? 'Dua text has been copied to clipboard!' : 'Text copied!'}
+                {reminderText.description}
               </p>
             </div>
 
             <div className="p-6 space-y-4">
               <div>
                 <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  {language === 'en' ? 'Title' : 'Title'}
+                  {reminderText.name}
                 </label>
                 <input
                   type="text"
-                  defaultValue={dua.title[language] || dua.title.en}
+                  value={dua.title[language] || dua.title.en}
+                  readOnly
                   className={`w-full px-3 py-2 rounded-lg border ${
                     isDark ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
                   }`}
@@ -273,38 +334,63 @@ export default function DuaDetail({
 
               <div>
                 <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  {language === 'en' ? 'Reminder Time' : 'Time'}
+                  {reminderText.days}
                 </label>
-                <select
-                  className={`w-full px-3 py-2 rounded-lg border ${
-                    isDark ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-                  }`}
-                >
-                  <option value="5">{language === 'en' ? '5 minutes' : '5 min'}</option>
-                  <option value="15">{language === 'en' ? '15 minutes' : '15 min'}</option>
-                  <option value="30">{language === 'en' ? '30 minutes' : '30 min'}</option>
-                  <option value="60">{language === 'en' ? '1 hour' : '1 hr'}</option>
-                  <option value="120">{language === 'en' ? '2 hours' : '2 hrs'}</option>
-                  <option value="1440">{language === 'en' ? 'Tomorrow' : 'Tomorrow'}</option>
-                </select>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {dayOptions.map(day => (
+                    <button
+                      key={day.value}
+                      type="button"
+                      aria-pressed={reminderDays.includes(day.value)}
+                      onClick={() => toggleReminderDay(day.value)}
+                      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                        reminderDays.includes(day.value)
+                          ? 'bg-emerald-600 text-white'
+                          : isDark
+                            ? 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {day.labels[language] || day.labels.en}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div>
                 <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                  {language === 'en' ? 'Sound' : 'Sound'}
+                  {reminderText.time}
+                </label>
+                <input
+                  type="time"
+                  value={reminderTime}
+                  onChange={event => setReminderTime(event.target.value)}
+                  className={`w-full px-3 py-2 rounded-lg border ${
+                    isDark ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+                  }`}
+                />
+              </div>
+
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  {reminderText.sound}
                 </label>
                 <select
+                  value={reminderSound}
+                  onChange={event => setReminderSound(event.target.value)}
                   className={`w-full px-3 py-2 rounded-lg border ${
                     isDark ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
                   }`}
                 >
-                  <option value="adhan">🕌 Adhan</option>
-                  <option value="bell">🔔 Bell</option>
-                  <option value="chime">🎵 Chime</option>
-                  <option value="gentle">🎶 Gentle</option>
-                  <option value="none">🔇 No Sound</option>
+                  {sounds.map(sound => (
+                    <option key={sound.id} value={sound.id}>{sound.emoji} {sound.name}</option>
+                  ))}
                 </select>
               </div>
+              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                {reminderText.multiple} {reminderText.browser}
+              </p>
+              {reminderError && <p role="alert" className="text-sm text-red-500">{reminderError}</p>}
             </div>
 
             <div className={`p-4 border-t ${isDark ? 'border-slate-700' : 'border-gray-200'} flex gap-2`}>
@@ -314,19 +400,18 @@ export default function DuaDetail({
                   isDark ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
                 }`}
               >
-                {language === 'en' ? 'Cancel' : 'Cancel'}
+                {reminderText.cancel}
               </button>
               <button
-                onClick={() => {
-                  setShowReminderModal(false);
-                  // Here you would integrate with the actual reminder system
-                  alert(language === 'en' ? 'Reminder set! You will be notified.' : 'Reminder set!');
-                }}
+                onClick={() => void saveWeeklyReminder()}
+                disabled={reminderDays.length === 0}
                 className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
-                  isDark ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                  reminderDays.length === 0
+                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                    : isDark ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-emerald-500 hover:bg-emerald-600 text-white'
                 }`}
               >
-                {language === 'en' ? 'Set Reminder' : 'Set'}
+                {reminderText.save}
               </button>
             </div>
           </div>

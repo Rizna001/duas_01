@@ -120,7 +120,9 @@ export default function Header({
 
             {/* Settings Button */}
             <button
+              type="button"
               onClick={onSettingsClick}
+              aria-label={language === 'en' ? 'Settings' : language === 'ar' ? 'الإعدادات' : language === 'ur' ? 'ترتیبات' : language === 'fr' ? 'Paramètres' : language === 'tr' ? 'Ayarlar' : language === 'id' ? 'Pengaturan' : language === 'bn' ? 'সেটিংস' : language === 'ms' ? 'Tetapan' : language === 'ta' ? 'அமைப்புகள்' : 'ക്രമീകരണങ്ങൾ'}
               className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
                 isDark ? 'bg-slate-800 hover:bg-slate-700 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
               }`}

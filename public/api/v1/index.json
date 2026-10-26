@@ -1,88 +1,803 @@
 {
   "api_version": "1.0.0",
-  "description": "Comprehensive Islamic Duas API - Authentic supplications from Quran and Sahih Hadith",
-  "base_url": "https://rizna001.github.io/islamic-duas-collection/api/v1",
-  "documentation": "https://github.com/Rizna001/islamic-duas-collection/blob/main/API.md",
+  "description": "Islamic duas, adhkar, and supplementary collections",
+  "base_path": "/api/v1",
   "endpoints": {
-    "all_duas": "/duas.json",
-    "api_index": "/index.json"
+    "index": "/api/v1/index.json",
+    "all_duas": "/api/v1/duas.json"
   },
-  "total_categories": 36,
-  "total_duas": 200,
+  "total_categories": 45,
+  "total_duas": 123,
   "supported_languages": [
-    { "code": "en", "name": "English", "flag": "🇬🇧" },
-    { "code": "ar", "name": "العربية", "flag": "🇸🇦" },
-    { "code": "ur", "name": "اردو", "flag": "🇵🇰" },
-    { "code": "hi", "name": "हिन्दी", "flag": "🇮🇳" },
-    { "code": "bn", "name": "বাংলা", "flag": "🇧🇩" },
-    { "code": "ta", "name": "தமிழ்", "flag": "🇮🇳" },
-    { "code": "ml", "name": "മലയാളം", "flag": "🇮🇳" },
-    { "code": "tr", "name": "Türkçe", "flag": "🇹🇷" },
-    { "code": "id", "name": "Bahasa Indonesia", "flag": "🇮🇩" },
-    { "code": "fr", "name": "Français", "flag": "🇫🇷" }
+    "en",
+    "ar",
+    "ur",
+    "fr",
+    "tr",
+    "id",
+    "bn",
+    "ms",
+    "ta",
+    "ml"
   ],
   "categories": [
-    { "id": "morning-evening", "name": { "en": "Morning & Evening" }, "icon": "🌅", "duas_count": 5 },
-    { "id": "eating", "name": { "en": "Before & After Eating" }, "icon": "🍽️", "duas_count": 4 },
-    { "id": "sleep-wake", "name": { "en": "Sleep & Waking Up" }, "icon": "🌙", "duas_count": 3 },
-    { "id": "mosque", "name": { "en": "Mosque" }, "icon": "🕌", "duas_count": 2 },
-    { "id": "home", "name": { "en": "Home" }, "icon": "🏠", "duas_count": 2 },
-    { "id": "bathroom", "name": { "en": "Bathroom" }, "icon": "🚿", "duas_count": 1 },
-    { "id": "travel", "name": { "en": "Travel" }, "icon": "✈️", "duas_count": 2 },
-    { "id": "hardship", "name": { "en": "Hardship & Distress" }, "icon": "😢", "duas_count": 3 },
-    { "id": "forgiveness", "name": { "en": "Forgiveness & Repentance" }, "icon": "🤲", "duas_count": 2 },
-    { "id": "protection", "name": { "en": "Protection" }, "icon": "🛡️", "duas_count": 2 },
-    { "id": "parents", "name": { "en": "For Parents" }, "icon": "❤️", "duas_count": 2 },
-    { "id": "knowledge", "name": { "en": "Knowledge & Study" }, "icon": "📚", "duas_count": 3 },
-    { "id": "sickness", "name": { "en": "Sickness & Healing" }, "icon": "🏥", "duas_count": 2 },
-    { "id": "rain", "name": { "en": "Rain & Weather" }, "icon": "🌧️", "duas_count": 2 },
-    { "id": "anger", "name": { "en": "Anger & Calm" }, "icon": "😤", "duas_count": 1 },
-    { "id": "friday", "name": { "en": "Friday (Jumu'ah)" }, "icon": "🕌", "duas_count": 1 },
-    { "id": "dua-general", "name": { "en": "General Good" }, "icon": "🤲", "duas_count": 3 },
-    { "id": "death-funeral", "name": { "en": "Death & Funeral" }, "icon": "🕊️", "duas_count": 6 },
-    { "id": "salawat", "name": { "en": "Salawat upon the Prophet" }, "icon": "💚", "duas_count": 4 },
-    { "id": "asma-ul-husna", "name": { "en": "99 Names of Allah" }, "icon": "✨", "duas_count": 1 },
-    { "id": "asma-ul-anbiya", "name": { "en": "Names of Prophets" }, "icon": "📖", "duas_count": 1 },
-    { "id": "wudu-adhan", "name": { "en": "Wudu & Adhan" }, "icon": "💧", "duas_count": 4 },
-    { "id": "laylatul-qadr", "name": { "en": "Laylatul Qadr" }, "icon": "🌟", "duas_count": 1 },
-    { "id": "istikhara", "name": { "en": "Istikhara" }, "icon": "🤔", "duas_count": 1 },
-    { "id": "nightmare", "name": { "en": "Nightmare & Bad Dreams" }, "icon": "😰", "duas_count": 1 },
-    { "id": "evil-eye", "name": { "en": "Protection from Evil Eye" }, "icon": "👁️", "duas_count": 1 },
-    { "id": "fasting", "name": { "en": "Fasting & Ramadan" }, "icon": "🌙", "duas_count": 2 },
-    { "id": "hajj-umrah", "name": { "en": "Hajj & Umrah" }, "icon": "🕋", "duas_count": 5 },
-    { "id": "debt-poverty", "name": { "en": "Debt & Poverty" }, "icon": "💰", "duas_count": 2 },
-    { "id": "children-newborn", "name": { "en": "Children & Newborn" }, "icon": "👶", "duas_count": 2 },
-    { "id": "marriage-wedding", "name": { "en": "Marriage & Wedding" }, "icon": "💍", "duas_count": 2 },
-    { "id": "clothes-appearance", "name": { "en": "Clothes & Appearance" }, "icon": "👔", "duas_count": 2 },
-    { "id": "market-business", "name": { "en": "Market & Business" }, "icon": "🏪", "duas_count": 1 },
-    { "id": "good-character", "name": { "en": "Good Character" }, "icon": "🌟", "duas_count": 1 },
-    { "id": "ummah", "name": { "en": "For the Ummah" }, "icon": "🌍", "duas_count": 1 }
+    {
+      "id": "morning-evening",
+      "name": {
+        "en": "Morning & Evening",
+        "ar": "الصباح والمساء",
+        "ur": "صبح و شام",
+        "fr": "Matin et Soir",
+        "tr": "Sabah ve Akşam",
+        "id": "Pagi dan Sore",
+        "bn": "সকাল ও সন্ধ্যা",
+        "ms": "Pagi dan Petang",
+        "ta": "காலை மற்றும் மாலை",
+        "ml": "രാവിലെയും വൈകുന്നേരവും"
+      },
+      "icon": "🌅",
+      "duas_count": 3
+    },
+    {
+      "id": "eating",
+      "name": {
+        "en": "Before & After Eating",
+        "ar": "قبل وبعد الطعام",
+        "ur": "کھانے سے پہلے اور بعد",
+        "fr": "Avant et Après le Repas",
+        "tr": "Yemekten Önce ve Sonra",
+        "id": "Sebelum dan Sesudah Makan",
+        "bn": "খাওয়ার আগে ও পরে",
+        "ms": "Sebelum dan Selepas Makan",
+        "ta": "உணவுக்கு முன் மற்றும் பின்",
+        "ml": "ഭക്ഷണത്തിന് മുമ്പും ശേഷവും"
+      },
+      "icon": "🍽️",
+      "duas_count": 4
+    },
+    {
+      "id": "sleep-wake",
+      "name": {
+        "en": "Sleep & Waking Up",
+        "ar": "النوم والاستيقاظ",
+        "ur": "سونے اور جاگنے",
+        "fr": "Sommeil et Réveil",
+        "tr": "Uyku ve Uyanma",
+        "id": "Tidur dan Bangun",
+        "bn": "ঘুম ও জাগরণ",
+        "ms": "Tidur dan Bangun",
+        "ta": "தூக்கம் மற்றும் எழுந்திருப்பு",
+        "ml": "ഉറക്കവും ഉണർവും"
+      },
+      "icon": "🌙",
+      "duas_count": 3
+    },
+    {
+      "id": "mosque",
+      "name": {
+        "en": "Mosque",
+        "ar": "المسجد",
+        "ur": "مسجد",
+        "fr": "Mosquée",
+        "tr": "Cami",
+        "id": "Masjid",
+        "bn": "মসজিদ",
+        "ms": "Masjid",
+        "ta": "மஸ்ஜித்",
+        "ml": "മസ്ജിദ്"
+      },
+      "icon": "🕌",
+      "duas_count": 2
+    },
+    {
+      "id": "home",
+      "name": {
+        "en": "Home",
+        "ar": "البيت",
+        "ur": "گھر",
+        "fr": "Maison",
+        "tr": "Ev",
+        "id": "Rumah",
+        "bn": "ঘর",
+        "ms": "Rumah",
+        "ta": "வீடு",
+        "ml": "വീട്"
+      },
+      "icon": "🏠",
+      "duas_count": 2
+    },
+    {
+      "id": "bathroom",
+      "name": {
+        "en": "Bathroom",
+        "ar": "دخول الخلاء",
+        "ur": "بیت الخلا",
+        "fr": "Toilettes",
+        "tr": "Tuvalet",
+        "id": "Kamar Mandi",
+        "bn": "বাথরুম",
+        "ms": "Tandas",
+        "ta": "கழிப்பறை",
+        "ml": "ശൗചാലയം"
+      },
+      "icon": "🚿",
+      "duas_count": 1
+    },
+    {
+      "id": "travel",
+      "name": {
+        "en": "Travel",
+        "ar": "السفر",
+        "ur": "سفر",
+        "fr": "Voyage",
+        "tr": "Yolculuk",
+        "id": "Perjalanan",
+        "bn": "ভ্রমণ",
+        "ms": "Perjalanan",
+        "ta": "பிரயாணம்",
+        "ml": "യാത്ര"
+      },
+      "icon": "✈️",
+      "duas_count": 2
+    },
+    {
+      "id": "hardship",
+      "name": {
+        "en": "Hardship & Distress",
+        "ar": "الكرب والشدائد",
+        "ur": "مشکلات اور پریشانی",
+        "fr": "Difficulté et Détresse",
+        "tr": "Zorluk ve Sıkıntı",
+        "id": "Kesulitan dan Kesusahan",
+        "bn": "কষ্ট ও দুর্দশা",
+        "ms": "Kesukaran dan Kesedihan",
+        "ta": "கஷ்டம் மற்றும் நெருக்கடி",
+        "ml": "ബുദ്ധിമുട്ടും ദുരിതവും"
+      },
+      "icon": "😢",
+      "duas_count": 3
+    },
+    {
+      "id": "forgiveness",
+      "name": {
+        "en": "Forgiveness & Repentance",
+        "ar": "المغفرة والتوبة",
+        "ur": "مغفرت اور توبہ",
+        "fr": "Pardon et Repentance",
+        "tr": "Mağfiret ve Tövbe",
+        "id": "Pengampunan dan Taubat",
+        "bn": "ক্ষমা ও তাওবা",
+        "ms": "Keampunan dan Taubat",
+        "ta": "மன்னிப்பு மற்றும் பாவமன்னிப்பு",
+        "ml": "പാപമോചനവും പശ്ചാത്താപവും"
+      },
+      "icon": "🤲",
+      "duas_count": 2
+    },
+    {
+      "id": "protection",
+      "name": {
+        "en": "Protection",
+        "ar": "الحماية",
+        "ur": "حفاظت",
+        "fr": "Protection",
+        "tr": "Koruma",
+        "id": "Perlindungan",
+        "bn": "সুরক্ষা",
+        "ms": "Perlindungan",
+        "ta": "பாதுகாப்பு",
+        "ml": "സംരക്ഷണം"
+      },
+      "icon": "🛡️",
+      "duas_count": 2
+    },
+    {
+      "id": "parents",
+      "name": {
+        "en": "For Parents",
+        "ar": "للوالدين",
+        "ur": "والدین کے لیے",
+        "fr": "Pour les Parents",
+        "tr": "Anne Baba İçin",
+        "id": "Untuk Orang Tua",
+        "bn": "পিতা-মাতার জন্য",
+        "ms": "Untuk Ibu Bapa",
+        "ta": "பெற்றோருக்காக",
+        "ml": "മാതാപിതാക്കൾക്കായി"
+      },
+      "icon": "❤️",
+      "duas_count": 2
+    },
+    {
+      "id": "knowledge",
+      "name": {
+        "en": "Knowledge & Study",
+        "ar": "العلم والدراسة",
+        "ur": "علم اور مطالعہ",
+        "fr": "Connaissance et Étude",
+        "tr": "İlim ve Çalışma",
+        "id": "Ilmu dan Belajar",
+        "bn": "জ্ঞান ও পড়াশোনা",
+        "ms": "Ilmu dan Pembelajaran",
+        "ta": "அறிவு மற்றும் கல்வி",
+        "ml": "അറിവും പഠനവും"
+      },
+      "icon": "📚",
+      "duas_count": 3
+    },
+    {
+      "id": "sickness",
+      "name": {
+        "en": "Sickness & Healing",
+        "ar": "المرض والشفاء",
+        "ur": "بیماری اور شفا",
+        "fr": "Maladie et Guérison",
+        "tr": "Hastalık ve Şifa",
+        "id": "Penyakit dan Kesembuhan",
+        "bn": "অসুস্থতা ও আরোগ্য",
+        "ms": "Penyakit dan Kesembuhan",
+        "ta": "நோய் மற்றும் குணமடைதல்",
+        "ml": "രോഗവും സുഖപ്പെടുത്തലും"
+      },
+      "icon": "🏥",
+      "duas_count": 2
+    },
+    {
+      "id": "rain",
+      "name": {
+        "en": "Rain & Weather",
+        "ar": "المطر والطقس",
+        "ur": "بارش اور موسم",
+        "fr": "Pluie et Météo",
+        "tr": "Yağmur ve Hava",
+        "id": "Hujan dan Cuaca",
+        "bn": "বৃষ্টি ও আবহাওয়া",
+        "ms": "Hujan dan Cuaca",
+        "ta": "மழை மற்றும் வானிலை",
+        "ml": "മഴയും കാലാവസ്ഥയും"
+      },
+      "icon": "🌧️",
+      "duas_count": 2
+    },
+    {
+      "id": "anger",
+      "name": {
+        "en": "Anger & Calm",
+        "ar": "الغضب والهدوء",
+        "ur": "غصہ اور سکون",
+        "fr": "Colère et Calme",
+        "tr": "Öfke ve Sakinlik",
+        "id": "Marah dan Ketenangan",
+        "bn": "রাগ ও শান্তি",
+        "ms": "Marah dan Ketenangan",
+        "ta": "கோபம் மற்றும் அமைதி",
+        "ml": "കോപവും ശാന്തിയും"
+      },
+      "icon": "😤",
+      "duas_count": 1
+    },
+    {
+      "id": "friday",
+      "name": {
+        "en": "Friday (Jumu'ah)",
+        "ar": "يوم الجمعة",
+        "ur": "جمعہ",
+        "fr": "Vendredi (Jumu'ah)",
+        "tr": "Cuma Günü",
+        "id": "Hari Jumat",
+        "bn": "জুমুআর দিন",
+        "ms": "Hari Jumaat",
+        "ta": "வெள்ளிக்கிழமை (ஜும்ஆ)",
+        "ml": "വെള്ളിയാഴ്ച (ജുമുഅ)"
+      },
+      "icon": "🕌",
+      "duas_count": 1
+    },
+    {
+      "id": "dua-general",
+      "name": {
+        "en": "General Good",
+        "ar": "الخير العام",
+        "ur": "عمومی خیر",
+        "fr": "Bien Général",
+        "tr": "Genel Hayır",
+        "id": "Kebaikan Umum",
+        "bn": "সাধারণ কল্যাণ",
+        "ms": "Kebaikan Umum",
+        "ta": "பொது நன்மை",
+        "ml": "പൊതു നന്മ"
+      },
+      "icon": "🤲",
+      "duas_count": 3
+    },
+    {
+      "id": "death-funeral",
+      "name": {
+        "en": "Death & Funeral",
+        "ar": "الموت والجنازة",
+        "ur": "موت اور جنازہ",
+        "fr": "Mort et Funérailles",
+        "tr": "Ölüm ve Cenaze",
+        "id": "Kematian & Pemakaman",
+        "bn": "মৃত্যু ও জানাজা",
+        "ms": "Kematian & Pengebumian",
+        "ta": "மரணம் & இறுதிச்சடங்கு",
+        "ml": "മരണവും സംസ്കാരവും"
+      },
+      "icon": "🕊️",
+      "duas_count": 6
+    },
+    {
+      "id": "salawat",
+      "name": {
+        "en": "Salawat upon the Prophet",
+        "ar": "الصلاة على النبي",
+        "ur": "درود شریف",
+        "fr": "Salawat sur le Prophète",
+        "tr": "Peygamber'e Salavat",
+        "id": "Shalawat atas Nabi",
+        "bn": "নবীর উপর দরূদ",
+        "ms": "Selawat ke atas Nabi",
+        "ta": "நபி மீது ஸலவாத்",
+        "ml": "നബി മേൽ സ്വലാത്ത്"
+      },
+      "icon": "💚",
+      "duas_count": 4
+    },
+    {
+      "id": "asma-ul-husna",
+      "name": {
+        "en": "99 Names of Allah (Asma ul Husna)",
+        "ar": "أسماء الله الحسنى",
+        "ur": "اسماء اللہ الحسنی",
+        "fr": "99 Noms d'Allah (Asma ul Husna)",
+        "tr": "Esmaü'l-Hüsna",
+        "id": "99 Nama Allah (Asmaul Husna)",
+        "bn": "আল্লাহর ৯৯টি নাম (আসমাউল হুসনা)",
+        "ms": "99 Nama Allah (Asmaul Husna)",
+        "ta": "அல்லாஹ்வின் 99 பெயர்கள் (அஸ்மாவுல் ஹுஸ்னா)",
+        "ml": "അല്ലാഹുവിന്റെ 99 നാമങ്ങൾ (അൽ-അസ്മാഉൽ ഹുസ്നാ)"
+      },
+      "icon": "✨",
+      "duas_count": 1
+    },
+    {
+      "id": "asma-ul-anbiya",
+      "name": {
+        "en": "Names of Prophets (Asma ul Anbiya)",
+        "ar": "أسماء الأنبياء",
+        "ur": "اسماء الانبیاء",
+        "fr": "Noms des Prophètes",
+        "tr": "Peygamberlerin İsimleri",
+        "id": "Nama-Nama Nabi",
+        "bn": "নবীদের নাম",
+        "ms": "Nama-Nama Nabi",
+        "ta": "நபிமார்களின் பெயர்கள்",
+        "ml": "നബിമാരുടെ നാമങ്ങൾ"
+      },
+      "icon": "📖",
+      "duas_count": 1
+    },
+    {
+      "id": "wudu-adhan",
+      "name": {
+        "en": "Wudu & Adhan",
+        "ar": "الوضوء والأذان",
+        "ur": "وضو اور اذان",
+        "fr": "Ablutions et Appel à la Prière",
+        "tr": "Abdest ve Ezan",
+        "id": "Wudhu & Adzan",
+        "bn": "অজু ও আযান",
+        "ms": "Wuduk & Azan",
+        "ta": "வுழு & அழான்",
+        "ml": "വുദൂഅും അദാനും"
+      },
+      "icon": "💧",
+      "duas_count": 4
+    },
+    {
+      "id": "laylatul-qadr",
+      "name": {
+        "en": "Laylatul Qadr (Night of Power)",
+        "ar": "ليلة القدر",
+        "ur": "شب قدر",
+        "fr": "Nuit du Destin",
+        "tr": "Kadir Gecesi",
+        "id": "Lailatul Qadar",
+        "bn": "লাইলাতুল কদর",
+        "ms": "Lailatul Qadar",
+        "ta": "லைலத்துல் கத்ர்",
+        "ml": "ലൈലത്തുൽ ഖദ്ർ"
+      },
+      "icon": "🌟",
+      "duas_count": 1
+    },
+    {
+      "id": "istikhara",
+      "name": {
+        "en": "Istikhara (Seeking Guidance)",
+        "ar": "الاستخارة",
+        "ur": "استخارہ",
+        "fr": "Istikhara (Demande de Guidance)",
+        "tr": "İstihare",
+        "id": "Istikharah",
+        "bn": "ইস্তিখারা",
+        "ms": "Istikharah",
+        "ta": "இஸ்திகாரா",
+        "ml": "ഇസ്തിഖാര"
+      },
+      "icon": "🤔",
+      "duas_count": 1
+    },
+    {
+      "id": "nightmare",
+      "name": {
+        "en": "Nightmare & Bad Dreams",
+        "ar": "الكوابيس والأحلام السيئة",
+        "ur": "برے خواب",
+        "fr": "Cauchemars et Mauvais Rêves",
+        "tr": "Kabus ve Kötü Rüyalar",
+        "id": "Mimpi Buruk",
+        "bn": "দুঃস্বপ্ন",
+        "ms": "Mimpi Buruk",
+        "ta": "தீய கனவுகள்",
+        "ml": "ദുസ്സ്വപ്നങ്ങൾ"
+      },
+      "icon": "😰",
+      "duas_count": 1
+    },
+    {
+      "id": "evil-eye",
+      "name": {
+        "en": "Protection from Evil Eye",
+        "ar": "الحماية من العين",
+        "ur": "نظرِ بد سے حفاظت",
+        "fr": "Protection contre le Mauvais Œil",
+        "tr": "Nazardan Korunma",
+        "id": "Perlindungan dari 'Ain",
+        "bn": "নজর থেকে সুরক্ষা",
+        "ms": "Perlindungan dari 'Ain",
+        "ta": "கெட்ட பார்வையிலிருந்து பாதுகாப்பு",
+        "ml": "ദൃഷ്ടിയിൽനിന്ന് സംരക്ഷണം"
+      },
+      "icon": "👁️",
+      "duas_count": 1
+    },
+    {
+      "id": "fasting",
+      "name": {
+        "en": "Fasting & Ramadan",
+        "ar": "الصيام ورمضان",
+        "ur": "روزہ اور رمضان",
+        "fr": "Jeûne et Ramadan",
+        "tr": "Oruç ve Ramazan",
+        "id": "Puasa & Ramadhan",
+        "bn": "রোজা ও রমজান",
+        "ms": "Puasa & Ramadhan",
+        "ta": "நோன்பு & ரமளான்",
+        "ml": "നോമ്പും റമളാനും"
+      },
+      "icon": "🌙",
+      "duas_count": 2
+    },
+    {
+      "id": "hajj-umrah",
+      "name": {
+        "en": "Hajj & Umrah",
+        "ar": "الحج والعمرة",
+        "ur": "حج اور عمرہ",
+        "fr": "Hajj et Omra",
+        "tr": "Hac ve Umre",
+        "id": "Haji dan Umrah",
+        "bn": "হজ ও উমরাহ",
+        "ms": "Haji dan Umrah",
+        "ta": "ஹஜ் & உம்ரா",
+        "ml": "ഹജ്ജും ഉംറയും"
+      },
+      "icon": "🕋",
+      "duas_count": 5
+    },
+    {
+      "id": "debt-poverty",
+      "name": {
+        "en": "Debt & Poverty",
+        "ar": "الدين والفقر",
+        "ur": "قرض اور غربت",
+        "fr": "Dette et Pauvreté",
+        "tr": "Borç ve Yoksulluk",
+        "id": "Hutang dan Kemiskinan",
+        "bn": "ঋণ ও দারিদ্র্য",
+        "ms": "Hutang dan Kemiskinan",
+        "ta": "கடன் & வறுமை",
+        "ml": "കടവും ദാരിദ്ര്യവും"
+      },
+      "icon": "💰",
+      "duas_count": 2
+    },
+    {
+      "id": "children-newborn",
+      "name": {
+        "en": "Children & Newborn",
+        "ar": "الأطفال والمولود",
+        "ur": "بچے اور نومولود",
+        "fr": "Enfants et Nouveau-né",
+        "tr": "Çocuklar ve Yeni Doğan",
+        "id": "Anak & Bayi Baru Lahir",
+        "bn": "শিশু ও নবজাতক",
+        "ms": "Kanak-kanak & Bayi Baru Lahir",
+        "ta": "குழந்தைகள் & புதிய பிறப்பு",
+        "ml": "കുട്ടികളും നവജാതശിശുവും"
+      },
+      "icon": "👶",
+      "duas_count": 2
+    },
+    {
+      "id": "marriage-wedding",
+      "name": {
+        "en": "Marriage & Wedding",
+        "ar": "الزفاف والزواج",
+        "ur": "شادی اور نکاح",
+        "fr": "Mariage et Noces",
+        "tr": "Evlilik ve Düğün",
+        "id": "Pernikahan & Pernikahan",
+        "bn": "বিবাহ ও বিয়ে",
+        "ms": "Perkahwinan & Pernikahan",
+        "ta": "திருமணம் & திருமண விழா",
+        "ml": "വിവാഹവും കല്യാണവും"
+      },
+      "icon": "💍",
+      "duas_count": 2
+    },
+    {
+      "id": "clothes-appearance",
+      "name": {
+        "en": "Clothes & Appearance",
+        "ar": "الملابس والمظهر",
+        "ur": "کپڑے اور حلیہ",
+        "fr": "Vêtements et Apparence",
+        "tr": "Kıyafet ve Görünüm",
+        "id": "Pakaian & Penampilan",
+        "bn": "পোশাক ও চেহারা",
+        "ms": "Pakaian & Penampilan",
+        "ta": "ஆடை & தோற்றம்",
+        "ml": "വസ്ത്രവും രൂപവും"
+      },
+      "icon": "👔",
+      "duas_count": 2
+    },
+    {
+      "id": "market-business",
+      "name": {
+        "en": "Market & Business",
+        "ar": "السوق والتجارة",
+        "ur": "بازار اور تجارت",
+        "fr": "Marché et Commerce",
+        "tr": "Pazar ve Ticaret",
+        "id": "Pasar & Bisnis",
+        "bn": "বাজার ও ব্যবসা",
+        "ms": "Pasar & Perniagaan",
+        "ta": "சந்தை & வணிகம்",
+        "ml": "ചന്തയും വ്യാപാരവും"
+      },
+      "icon": "🏪",
+      "duas_count": 1
+    },
+    {
+      "id": "good-character",
+      "name": {
+        "en": "Good Character",
+        "ar": "حسن الخلق",
+        "ur": "اخلاق",
+        "fr": "Bon Caractère",
+        "tr": "Güzel Ahlak",
+        "id": "Akhlak Mulia",
+        "bn": "সুন্দর চরিত্র",
+        "ms": "Akhlak Mulia",
+        "ta": "நல்ல ஒழுக்கம்",
+        "ml": "സദ്സ്വഭാവം"
+      },
+      "icon": "🌟",
+      "duas_count": 1
+    },
+    {
+      "id": "ummah",
+      "name": {
+        "en": "For the Ummah",
+        "ar": "للأمة",
+        "ur": "امت کے لیے",
+        "fr": "Pour la Ummah",
+        "tr": "Ümmet İçin",
+        "id": "Untuk Umat",
+        "bn": "উম্মাহর জন্য",
+        "ms": "Untuk Ummah",
+        "ta": "உம்மாவுக்காக",
+        "ml": "ഉമ്മത്തിനായി"
+      },
+      "icon": "🌍",
+      "duas_count": 1
+    },
+    {
+      "id": "40-rabbana",
+      "name": {
+        "en": "40 Rabbana Duas (Quran)",
+        "ar": "40 دعاء ربنا (القرآن)",
+        "ur": "40 ربنا دعائیں (قرآن)",
+        "fr": "40 Duas Rabbana (Coran)",
+        "tr": "40 Rabbana Duası (Kur'an)",
+        "id": "40 Doa Rabbana (Al-Quran)",
+        "bn": "৪০ রাব্বানা দোয়া (কুরআন)",
+        "ms": "40 Doa Rabbana (Al-Quran)",
+        "ta": "40 ரப்பனா துஆக்கள் (குர்ஆன்)",
+        "ml": "40 റബ്ബനാ ദുആകൾ (ഖുർആൻ)"
+      },
+      "icon": "📿",
+      "duas_count": 5
+    },
+    {
+      "id": "after-prayer",
+      "name": {
+        "en": "After Every Prayer",
+        "ar": "بعد كل صلاة",
+        "ur": "ہر نماز کے بعد",
+        "fr": "Après Chaque Prière",
+        "tr": "Her Namazdan Sonra",
+        "id": "Setiap Selesai Shalat",
+        "bn": "প্রতি নামাজের পরে",
+        "ms": "Selepas Setiap Solat",
+        "ta": "ஒவ்வொரு தொழுகைக்கு பின்",
+        "ml": "ഓരോ നമസ്കാരത്തിന് ശേഷം"
+      },
+      "icon": "🕌",
+      "duas_count": 5
+    },
+    {
+      "id": "dhikr-adhkar",
+      "name": {
+        "en": "Dhikr & Adhkar",
+        "ar": "الذكر والأذكار",
+        "ur": "ذکر و اذکار",
+        "fr": "Dhikr et Adhkar",
+        "tr": "Zikir ve Ezkar",
+        "id": "Dzikir & Adzkar",
+        "bn": "যিকির ও আযকার",
+        "ms": "Dzikir & Adzkar",
+        "ta": "திக்ர் & அத்கார்",
+        "ml": "ദിക്ർ & അദ്കാർ"
+      },
+      "icon": "📿",
+      "duas_count": 5
+    },
+    {
+      "id": "salawat-complete",
+      "name": {
+        "en": "Salawat & Durood",
+        "ar": "الصلاة والسلام على النبي",
+        "ur": "صلوات و درود",
+        "fr": "Salawat et Durood",
+        "tr": "Salavat ve Dürüd",
+        "id": "Shalawat & Durood",
+        "bn": "সালাওয়াত ও দরূদ",
+        "ms": "Selawat & Durood",
+        "ta": "ஸலவாத் & துரூத்",
+        "ml": "സ്വലാത്ത് & ദുരൂദ്"
+      },
+      "icon": "💚",
+      "duas_count": 2
+    },
+    {
+      "id": "prayer-specific",
+      "name": {
+        "en": "Specific Prayer Duas",
+        "ar": "أدعية الصلوات",
+        "ur": "نمازوں کی دعائیں",
+        "fr": "Duas des Prières",
+        "tr": "Namaz Duaları",
+        "id": "Doa Shalat",
+        "bn": "নামাজের দোয়া",
+        "ms": "Doa Solat",
+        "ta": "தொழுகை துஆக்கள்",
+        "ml": "നമസ്കാര ദുആകൾ"
+      },
+      "icon": "🕐",
+      "duas_count": 7
+    },
+    {
+      "id": "hajj-umrah-expanded",
+      "name": {
+        "en": "Hajj & Umrah Duas",
+        "ar": "أدعية الحج والعمرة",
+        "ur": "حج اور عمرہ کی دعائیں",
+        "fr": "Duas du Hajj et Omra",
+        "tr": "Hac ve Umre Duaları",
+        "id": "Doa Haji dan Umrah",
+        "bn": "হজ ও উমরাহর দোয়া",
+        "ms": "Doa Haji dan Umrah",
+        "ta": "ஹஜ் & உம்ரா துஆக்கள்",
+        "ml": "ഹജ്ജ് & ഉംറ ദുആകൾ"
+      },
+      "icon": "🕋",
+      "duas_count": 8
+    },
+    {
+      "id": "important-texts",
+      "name": {
+        "en": "Important Islamic Texts",
+        "ar": "نصوص إسلامية مهمة",
+        "ur": "اہم اسلامی متون",
+        "fr": "Textes Islamiques Importants",
+        "tr": "Önemli İslami Metinler",
+        "id": "Teks Islam Penting",
+        "bn": "গুরুত্বপূর্ণ ইসলামী পাঠ্য",
+        "ms": "Teks Islam Penting",
+        "ta": "முக்கிய இஸ்லாமிய நூல்கள்",
+        "ml": "പ്രധാന ഇസ്‌ലാമിക ഗ്രന്ഥങ്ങൾ"
+      },
+      "icon": "📜",
+      "duas_count": 6
+    },
+    {
+      "id": "all-rabbana-duas",
+      "name": {
+        "en": "Complete 40 Rabbana Duas",
+        "ar": "الأدعية الأربعون الكاملة - ربنا",
+        "ur": "مکمل 40 ربنا دعائیں",
+        "fr": "40 Duas Rabbana Complets",
+        "tr": "Tam 40 Rabbana Duası",
+        "id": "40 Doa Rabbana Lengkap",
+        "bn": "সম্পূর্ণ ৪০ রাব্বানা দোয়া",
+        "ms": "40 Doa Rabbana Lengkap",
+        "ta": "முழுமையான 40 ரப்பனா துஆக்கள்",
+        "ml": "പൂർണ്ണമായ 40 റബ്ബനാ ദുആകൾ"
+      },
+      "icon": "📿",
+      "duas_count": 3
+    },
+    {
+      "id": "all-salawats",
+      "name": {
+        "en": "Complete Salawats Collection",
+        "ar": "مجموعة الصلوات الكاملة",
+        "ur": "مکمل صلوات کا مجموعہ",
+        "fr": "Collection Complète des Salawats",
+        "tr": "Tam Salavat Koleksiyonu",
+        "id": "Koleksi Shalawat Lengkap",
+        "bn": "সম্পূর্ণ সালাওয়াত সংগ্রহ",
+        "ms": "Koleksi Salawat Lengkap",
+        "ta": "முழுமையான ஸலவாத் தொகுப்பு",
+        "ml": "പൂർണ്ണമായ സ്വലാത്ത് ശേഖരം"
+      },
+      "icon": "💚",
+      "duas_count": 5
+    },
+    {
+      "id": "prophet-names-meanings",
+      "name": {
+        "en": "Names of Prophets with Meanings",
+        "ar": "أسماء الأنبياء مع معانيها",
+        "ur": "انبیاء کے نام معانی کے ساتھ",
+        "fr": "Noms des Prophètes avec Significations",
+        "tr": "Peygamber İsimleri ve Anlamları",
+        "id": "Nama-Nama Nabi dengan Makna",
+        "bn": "নবীদের নাম অর্থসহ",
+        "ms": "Nama-Nama Nabi dengan Makna",
+        "ta": "நபிமார்களின் பெயர்கள் பொருளுடன்",
+        "ml": "നബിമാരുടെ നാമങ്ങൾ അർത്ഥത്തോടെ"
+      },
+      "icon": "📚",
+      "duas_count": 1
+    }
   ],
-  "sources": [
-    "Sahih al-Bukhari",
-    "Sahih Muslim",
-    "Sunan Abu Dawud",
-    "Jami' at-Tirmidhi",
-    "Sunan an-Nasa'i",
-    "Sunan Ibn Majah",
-    "The Noble Quran",
-    "Musnad Ahmad",
-    "Al-Adab Al-Mufrad"
-  ],
-  "usage": {
-    "description": "This API provides authentic Islamic duas organized by situation with translations in multiple languages.",
-    "authentication": "None required - public API",
-    "rate_limit": "No rate limit for static JSON files",
-    "cors": "Enabled - can be accessed from any domain",
-    "caching": "Recommended to cache for 24 hours"
-  },
-  "examples": {
-    "javascript": "fetch('/api/v1/duas.json').then(res => res.json()).then(data => console.log(data))",
-    "python": "import requests; data = requests.get('/api/v1/duas.json').json()",
-    "curl": "curl https://rizna001.github.io/islamic-duas-collection/api/v1/duas.json"
-  },
-  "license": "MIT",
-  "repository": "https://github.com/Rizna001/islamic-duas-collection",
-  "issues": "https://github.com/Rizna001/islamic-duas-collection/issues",
-  "contributing": "https://github.com/Rizna001/islamic-duas-collection/blob/main/CONTRIBUTING.md"
+  "collections": {
+    "asma_ul_husna": 99,
+    "asma_ul_anbiya": 25,
+    "rabbana_duas": 40,
+    "all_rabbana_duas": 40,
+    "comprehensive_rabbana_duas": 22,
+    "all_salawats": 6,
+    "prophets_with_duas": 25,
+    "prophet_names_with_meanings": 25,
+    "famous_salawat": 4,
+    "qaseedatul_burdah_chapter_1": 1,
+    "additional_important_texts": 2
+  }
 }
