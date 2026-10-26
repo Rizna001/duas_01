@@ -1,5 +1,7 @@
 # 🤲 Comprehensive Islamic Duas Collection
 
+Repository: `duas_01`
+
 A React web app and static JSON API for duas and dhikr, organized by situation and available in 10 languages.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
